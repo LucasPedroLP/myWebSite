@@ -1,9 +1,55 @@
 <!DOCTYPE html>
 <head>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <meta name="viewport" content="width=device-width, minimum-scale=0.1">
-    <title>My Image</title>   
+  <script type="text/javascript" charset="utf-8">
+    
+    // ##################### TESTS ##########################
+    // Suponiendo que la URL es window.location.href
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams.toString());
+    // Obtener el valor del parámetro 'parametro'
+    const miParametro = urlParams.get('deployID');
+    if(urlParams)
+    console.log(miParametro); // Imprimirá el valor de 'parametro'
+    
+    myURL = window.location.href.replace(window.location.hash, "");
+    // http://127.0.0.1:5500/Knowledge%20Base%20Test.html?country=BRA
+    console.log(myURL);
+    
+    // ########################################################
+    function load(){
+      
+      if(window.location.hash)
+      window.location.replace(myURL);
+      var deployID;
+      try{
+        // deployID = document.getElementById("txt").value;
+        deployID = urlParams.get('deployID');
+        if(!deployID)
+        deployID = '0848b0b1-4a71-436e-8e1a-15b5eff6f7fa'
+      }
+      catch(error){
+        deployID = '0848b0b1-4a71-436e-8e1a-15b5eff6f7fa'
+      }
+      (function (g, e, n, es, ys) {
+        g['_genesysJs'] = e;
+        g[e] = g[e] || function () {
+          (g[e].q = g[e].q || []).push(arguments)
+        };
+        g[e].t = 1 * new Date();
+        g[e].c = es;
+        ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+      })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+        environment: 'prod',
+        deploymentId: deployID//'0848b0b1-4a71-436e-8e1a-15b5eff6f7fa'
+      });
+      console.log(deployID, myURL);
+    }
+  </script>
+  
 </head>
 <body>
-   <img src="genesys.jpg"/>
-</body>
+  <div>    
+      <input type="button" onclick="load()" value="load"/>
+      <div id="genesys-support-center"></div>    
+    </div>
+  </body>
